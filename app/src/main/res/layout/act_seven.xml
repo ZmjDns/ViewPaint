@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.zmj.viewpaint.lesson7.SportView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
+
+        <com.zmj.viewpaint.lesson7.StaticLayoutTextVIew
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+
+
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>
