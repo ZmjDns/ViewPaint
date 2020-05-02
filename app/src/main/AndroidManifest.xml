@@ -13,6 +13,9 @@
 
         </activity>
         <activity android:name=".lesson6.SixAct">
+
+        </activity>
+        <activity android:name=".lesson7.ActSeven" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
