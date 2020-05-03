@@ -28,9 +28,10 @@ class SportView(context: Context?, attrs: AttributeSet?) : View(context, attrs){
     private val fontMtrics = Paint.FontMetrics()
 
     init {
-        paint.textSize = dp2px(100f)
+        paint.textSize = dp2px(40f)
         //paint.typeface = Typeface.createFromAsset(getContext().assets,"Quicksand-Regular.ttf")
         paint.textAlign = Paint.Align.CENTER
+        paint.getFontMetrics(fontMtrics)
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -51,10 +52,18 @@ class SportView(context: Context?, attrs: AttributeSet?) : View(context, attrs){
         paint.style = Paint.Style.FILL
         //paint.getTextBounds("nbja",0,"nbja".length,textBounds)
         //val offsetY = (textBounds.top + textBounds.bottom) /2
-        paint.getFontMetrics(fontMtrics)
+
         val offsetY = (fontMtrics.ascent + fontMtrics.descent) / 2
 
         canvas?.drawText("nbja",width/2f,height/2f - offsetY,paint)
+
+        paint.textAlign = Paint.Align.LEFT
+        paint.textSize = dp2px(150f)
+        paint.getTextBounds("aaa",0,"aaa".length,textBounds)
+        canvas?.drawText("aaa",-textBounds.left.toFloat(),200f,paint)
+
+        paint.textSize = dp2px(15f)
+        canvas?.drawText("aaa",0f,200 + paint.fontSpacing,paint)
 
     }
 
