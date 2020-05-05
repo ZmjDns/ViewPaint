@@ -17,9 +17,17 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"/>
 
+        <com.zmj.viewpaint.lesson7.CanvasCoordinate
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"/>
 
+        <com.zmj.viewpaint.lesson7.CameraView
+            android:layout_width="wrap_content"
+            android:layout_height="260dp"/>
+
+        <com.zmj.viewpaint.lesson7.FlipPageView
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"/>
 
     </LinearLayout>
-
-
 </androidx.core.widget.NestedScrollView>
