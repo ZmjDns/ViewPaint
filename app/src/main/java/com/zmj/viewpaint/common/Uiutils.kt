@@ -31,3 +31,10 @@ fun getAvatarBit(resources: Resources,width: Float): Bitmap{
     options.inTargetDensity = width.toInt()
     return BitmapFactory.decodeResource(resources, R.drawable.avatar_rengwuxian, options)
 }
+
+/**
+ * Camera在Z轴的位置
+ */
+fun getZForCamera(): Float{
+    return -6 * Resources.getSystem().displayMetrics.density
+}
