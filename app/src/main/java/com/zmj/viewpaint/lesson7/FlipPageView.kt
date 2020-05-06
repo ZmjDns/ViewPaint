@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import com.zmj.viewpaint.common.dp2px
 import com.zmj.viewpaint.common.getAvatarBit
 import com.zmj.viewpaint.common.getZForCamera
 
@@ -21,6 +22,8 @@ class FlipPageView(context: Context?, attrs: AttributeSet?) : View(context, attr
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val camera = Camera()
 
+    private val PADDIND = dp2px(50f)
+
     private val bitmap = getAvatarBit(resources,400f)
 
     init {
@@ -34,23 +37,23 @@ class FlipPageView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //canvas?.clipRect(100f,100f,100 + bitmap.width.toFloat(),(100 + bitmap.height)/2f)
         canvas?.save()
-        canvas?.translate((100 + bitmap.width)/2f,(100 + bitmap.height)/2f)
+        canvas?.translate((PADDIND + bitmap.width)/2f,(PADDIND + bitmap.height)/2f)
         canvas?.rotate(-20f)
-        canvas?.clipRect(-(100f + bitmap.width),-(100f + bitmap.height),(100f + bitmap.width),0f)
+        canvas?.clipRect(-(PADDIND + bitmap.width),-(PADDIND + bitmap.height),(PADDIND + bitmap.width),0f)
         canvas?.rotate(20f)
-        canvas?.translate(-(100 + bitmap.width)/2f,-(100 + bitmap.height)/2f)
-        canvas?.drawBitmap(bitmap,100f,100f,paint)
+        canvas?.translate(-(PADDIND + bitmap.width)/2f,-(PADDIND + bitmap.height)/2f)
+        canvas?.drawBitmap(bitmap,PADDIND,PADDIND,paint)
         canvas?.restore()
 
         //下班部分
         canvas?.save()
-        canvas?.translate((100 + bitmap.width)/2f,(100 + bitmap.height)/2f)
+        canvas?.translate((PADDIND + bitmap.width)/2f,(PADDIND + bitmap.height)/2f)
         canvas?.rotate(-20f)
         camera.applyToCanvas(canvas)
-        canvas?.clipRect(-(100f + bitmap.width),0f,(100f + bitmap.width),(100f + bitmap.height))
+        canvas?.clipRect(-(PADDIND + bitmap.width),0f,(PADDIND + bitmap.width),(PADDIND + bitmap.height))
         canvas?.rotate(20f)
-        canvas?.translate(-(100 + bitmap.width)/2f,-(100 + bitmap.height)/2f)
-        canvas?.drawBitmap(bitmap,100f,100f,paint)
+        canvas?.translate(-(PADDIND + bitmap.width)/2f,-(PADDIND + bitmap.height)/2f)
+        canvas?.drawBitmap(bitmap,PADDIND,PADDIND,paint)
         canvas?.restore()
     }
 
