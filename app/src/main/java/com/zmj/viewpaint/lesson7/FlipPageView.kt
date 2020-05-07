@@ -27,7 +27,7 @@ class FlipPageView(context: Context?, attrs: AttributeSet?) : View(context, attr
     private val bitmap = getAvatarBit(resources,400f)
 
     init {
-        camera.rotateX(45f)
+        camera.rotateX(30f)
         camera.setLocation(0f,0f, getZForCamera())
     }
 
