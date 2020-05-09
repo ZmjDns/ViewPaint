@@ -27,7 +27,7 @@ class FlipPageAnimateView(context: Context?, attrs: AttributeSet?) : View(contex
 
     private var topFlip:Float = 0f
     private var bottomFlip:Float = 0f
-    private var rotationCanvas: Float = 0f
+    private var rotationFlip: Float = 0f
 
     init {
         camera.setLocation(0f,0f, getZForCamera())
@@ -49,11 +49,11 @@ class FlipPageAnimateView(context: Context?, attrs: AttributeSet?) : View(contex
     }
 
     public fun getRotationCanvas(): Float{
-        return rotationCanvas
+        return rotationFlip
     }
 
     public fun setRotationCanvas(rotationCanvas: Float){
-        this.rotationCanvas = rotationCanvas
+        this.rotationFlip = rotationCanvas
         invalidate()
     }
 
@@ -62,7 +62,7 @@ class FlipPageAnimateView(context: Context?, attrs: AttributeSet?) : View(contex
 
         canvas!!.save()
         canvas.translate(PADDING + bitmap.width/2,PADDING + bitmap.height/2)
-        canvas.rotate(-rotationCanvas)
+        canvas.rotate(-rotationFlip)
 
         camera.save()
         camera.rotateX(topFlip)
@@ -70,14 +70,14 @@ class FlipPageAnimateView(context: Context?, attrs: AttributeSet?) : View(contex
         camera.restore()
 
         canvas.clipRect(-bitmap.width,-bitmap.height,bitmap.width,0)
-        canvas.rotate(rotationCanvas)
+        canvas.rotate(rotationFlip)
         canvas.translate(-(PADDING + bitmap.width/2),-(PADDING + bitmap.height/2))
         canvas.drawBitmap(bitmap,PADDING,PADDING,paint)
         canvas.restore()
 
         canvas.save()
         canvas.translate(PADDING + bitmap.width/2,PADDING + bitmap.height/2)
-        canvas.rotate(-rotationCanvas)
+        canvas.rotate(-rotationFlip)
 
         camera.save()
         camera.rotateX(bottomFlip)//在旋转x轴
@@ -85,7 +85,7 @@ class FlipPageAnimateView(context: Context?, attrs: AttributeSet?) : View(contex
         camera.restore()
 
         canvas.clipRect(-bitmap.width,0,bitmap.width,bitmap.height)
-        canvas.rotate(rotationCanvas)
+        canvas.rotate(rotationFlip)
         canvas.translate(-(PADDING + bitmap.width/2),-(PADDING + bitmap.height/2))
         canvas.drawBitmap(bitmap,PADDING,PADDING,paint)
         canvas.restore()
