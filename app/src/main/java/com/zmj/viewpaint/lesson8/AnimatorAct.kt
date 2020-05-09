@@ -2,8 +2,10 @@ package com.zmj.viewpaint.lesson8
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.animation.doOnResume
 import com.zmj.viewpaint.R
 import com.zmj.viewpaint.common.dp2px
 import kotlinx.android.synthetic.main.act_eight.*
@@ -45,14 +47,17 @@ class AnimatorAct: AppCompatActivity() {
 
         val rotationAnimator = ObjectAnimator.ofFloat(flipPage,"rotationCanvas",270f)
         rotationAnimator.duration = 1500
+        rotationAnimator.repeatMode = ValueAnimator.RESTART
+        rotationAnimator.repeatCount = 10
 
         val topFlipAnimator = ObjectAnimator.ofFloat(flipPage,"topFlip",-45f)
         rotationAnimator.duration = 1500
+        rotationAnimator.repeatMode = ValueAnimator.RESTART
+        rotationAnimator.repeatCount = 10
 
         val animatorSet = AnimatorSet()
         animatorSet.playSequentially(bottomFlipAnimator,rotationAnimator,topFlipAnimator)
         animatorSet.startDelay = 1000
         animatorSet.start()
-
     }
 }
