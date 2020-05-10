@@ -41,11 +41,11 @@ class AnimatorAct: AppCompatActivity() {
         objectAnimator.startDelay = 1000
         objectAnimator.start()*/
 
+        //多个动画化按顺序执行
         val bottomFlipAnimator = ObjectAnimator.ofFloat(flipPage,"bottomFlip",45f)
         bottomFlipAnimator.duration = 1500
 
-
-        val rotationAnimator = ObjectAnimator.ofFloat(flipPage,"rotationCanvas",270f)
+        val rotationAnimator = ObjectAnimator.ofFloat(flipPage,"rotationFlip",270f)
         rotationAnimator.duration = 1500
         rotationAnimator.repeatMode = ValueAnimator.RESTART
         rotationAnimator.repeatCount = 10
@@ -55,6 +55,7 @@ class AnimatorAct: AppCompatActivity() {
         rotationAnimator.repeatMode = ValueAnimator.RESTART
         rotationAnimator.repeatCount = 10
 
+        //多个动画化按顺序执行
         val animatorSet = AnimatorSet()
         animatorSet.playSequentially(bottomFlipAnimator,rotationAnimator,topFlipAnimator)
         animatorSet.startDelay = 1000
