@@ -2,6 +2,7 @@ package com.zmj.viewpaint.lesson8
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -41,7 +42,7 @@ class AnimatorAct: AppCompatActivity() {
         objectAnimator.startDelay = 1000
         objectAnimator.start()*/
 
-        //多个动画化按顺序执行
+        /*//多个动画化按顺序执行
         val bottomFlipAnimator = ObjectAnimator.ofFloat(flipPage,"bottomFlip",45f)
         bottomFlipAnimator.duration = 1500
 
@@ -59,6 +60,16 @@ class AnimatorAct: AppCompatActivity() {
         val animatorSet = AnimatorSet()
         animatorSet.playSequentially(bottomFlipAnimator,rotationAnimator,topFlipAnimator)
         animatorSet.startDelay = 1000
-        animatorSet.start()
+        animatorSet.start()*/
+
+        //同一个View的    多个属性    同时    做动画改变
+        val bottomFlipHolder = PropertyValuesHolder.ofFloat("bottomFlip",45f)
+        val rotationFlipHolder = PropertyValuesHolder.ofFloat("rotationFlip",270f)
+        val topFlipHolder = PropertyValuesHolder.ofFloat("topFlip",-45f)
+
+        val objectAnimatorHolder = ObjectAnimator.ofPropertyValuesHolder(flipPage,bottomFlipHolder,rotationFlipHolder,topFlipHolder)
+        objectAnimatorHolder.startDelay = 1000
+        objectAnimatorHolder.duration = 2000
+        objectAnimatorHolder.start()
     }
 }
