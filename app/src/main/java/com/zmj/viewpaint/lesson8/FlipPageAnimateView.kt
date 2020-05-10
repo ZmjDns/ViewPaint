@@ -48,11 +48,11 @@ class FlipPageAnimateView(context: Context?, attrs: AttributeSet?) : View(contex
         invalidate()
     }
 
-    public fun getRotationCanvas(): Float{
+    public fun getRotationFlip(): Float{
         return rotationFlip
     }
 
-    public fun setRotationCanvas(rotationCanvas: Float){
+    public fun setRotationFlip(rotationCanvas: Float){
         this.rotationFlip = rotationCanvas
         invalidate()
     }
