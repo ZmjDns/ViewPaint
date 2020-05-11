@@ -1,14 +1,15 @@
 package com.zmj.viewpaint.lesson8
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
-import android.animation.ValueAnimator
+import android.animation.*
+import android.graphics.Point
 import android.os.Bundle
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.animation.doOnResume
 import com.zmj.viewpaint.R
 import com.zmj.viewpaint.common.dp2px
+import com.zmj.viewpaint.lesson8.evaluator.PointTypeEvaluator
+import com.zmj.viewpaint.lesson8.evaluator.ProvinceEvaluator
 import kotlinx.android.synthetic.main.act_eight.*
 
 /**
@@ -62,7 +63,7 @@ class AnimatorAct: AppCompatActivity() {
         animatorSet.startDelay = 1000
         animatorSet.start()*/
 
-        //同一个View的    多个属性    同时    做动画改变
+        /*//同一个View的    多个属性    同时    做动画改变
         val bottomFlipHolder = PropertyValuesHolder.ofFloat("bottomFlip",45f)
         val rotationFlipHolder = PropertyValuesHolder.ofFloat("rotationFlip",270f)
         val topFlipHolder = PropertyValuesHolder.ofFloat("topFlip",-45f)
@@ -70,6 +71,19 @@ class AnimatorAct: AppCompatActivity() {
         val objectAnimatorHolder = ObjectAnimator.ofPropertyValuesHolder(flipPage,bottomFlipHolder,rotationFlipHolder,topFlipHolder)
         objectAnimatorHolder.startDelay = 1000
         objectAnimatorHolder.duration = 2000
-        objectAnimatorHolder.start()
+        objectAnimatorHolder.start()*/
+
+        //keyFrame设置关键帧
+        val length = dp2px(300f)
+        val keyframe1 = Keyframe.ofFloat(0f,0f)
+        val keyframe2 = Keyframe.ofFloat(0.2f,1.2f * length)
+        val keyframe3 = Keyframe.ofFloat(0.8f,0.6f * length)
+        val keyframe4 = Keyframe.ofFloat(1f,1f * length)
+
+        val propertyValuesHolder = PropertyValuesHolder.ofKeyframe("translationX",keyframe1,keyframe2,keyframe3,keyframe4)
+        val objectAnimator = ObjectAnimator.ofPropertyValuesHolder(keyFrame,propertyValuesHolder)
+        objectAnimator.startDelay = 1000
+        objectAnimator.duration = 2000
+        objectAnimator.start()
     }
 }
