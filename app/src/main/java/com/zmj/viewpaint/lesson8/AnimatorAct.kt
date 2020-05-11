@@ -73,7 +73,7 @@ class AnimatorAct: AppCompatActivity() {
         objectAnimatorHolder.duration = 2000
         objectAnimatorHolder.start()*/
 
-        //keyFrame设置关键帧
+       /* //keyFrame设置关键帧
         val length = dp2px(300f)
         val keyframe1 = Keyframe.ofFloat(0f,0f)
         val keyframe2 = Keyframe.ofFloat(0.2f,1.2f * length)
@@ -84,6 +84,15 @@ class AnimatorAct: AppCompatActivity() {
         val objectAnimator = ObjectAnimator.ofPropertyValuesHolder(keyFrame,propertyValuesHolder)
         objectAnimator.startDelay = 1000
         objectAnimator.duration = 2000
-        objectAnimator.start()
+        objectAnimator.start()*/
+
+        //ObjectAnimator的使用
+        val targetPoint = Point(dp2px(300f).toInt(), dp2px(300f).toInt())
+        val pointViewAnim = ObjectAnimator.ofObject(pointView,"point",
+            PointTypeEvaluator(),targetPoint)
+        pointViewAnim.startDelay = 1000
+        pointViewAnim.duration = 2000
+        pointViewAnim.interpolator = AccelerateInterpolator()
+        pointViewAnim.start()
     }
 }
