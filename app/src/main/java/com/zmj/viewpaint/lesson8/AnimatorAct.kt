@@ -94,5 +94,11 @@ class AnimatorAct: AppCompatActivity() {
         pointViewAnim.duration = 2000
         pointViewAnim.interpolator = AccelerateInterpolator()
         pointViewAnim.start()
+
+        val provinceAni = ObjectAnimator.ofObject(provinceView,"province",ProvinceEvaluator(),"澳门特别行政区")
+        provinceAni.startDelay = 1000
+        provinceAni.interpolator = DecelerateInterpolator()
+        provinceAni.duration = 5000
+        provinceAni.start()
     }
 }
