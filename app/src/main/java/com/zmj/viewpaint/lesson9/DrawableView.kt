@@ -30,3 +30,15 @@ class DrawableView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     }
 }
+
+class MeshDrawableView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
+
+    private val meshDrawable = MeshDrawable()
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+
+        meshDrawable.setBounds(dp2px(20f).toInt(), dp2px(20f).toInt(),width,height)
+        meshDrawable.draw(canvas!!)
+    }
+}
