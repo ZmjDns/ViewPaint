@@ -9,15 +9,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <com.zmj.viewpaint.lesson8.CircleView
-            android:id="@+id/circleView"
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" android:visibility="gone">
+            <com.zmj.viewpaint.lesson8.CircleView
+                android:id="@+id/circleView"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"/>
+
+            <com.zmj.viewpaint.lesson8.FlipPageAnimateView
+                android:id="@+id/flipPage"
+                android:layout_width="wrap_content"
+                android:layout_height="400dp"/>
+
+            <ImageView
+                android:id="@+id/keyFrame"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/avatar_rengwuxian"/>
+        </LinearLayout>
+
+
+        <com.zmj.viewpaint.lesson8.PointView
+            android:id="@+id/pointView"
             android:layout_width="match_parent"
             android:layout_height="300dp"/>
 
-        <com.zmj.viewpaint.lesson8.FlipPageAnimateView
-            android:id="@+id/flipPage"
-            android:layout_width="wrap_content"
-            android:layout_height="400dp"/>
+        <com.zmj.viewpaint.lesson8.ProvinceView
+            android:id="@+id/provinceView"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"/>
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
