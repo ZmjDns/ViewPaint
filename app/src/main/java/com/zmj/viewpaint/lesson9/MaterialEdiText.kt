@@ -3,6 +3,7 @@ package com.zmj.viewpaint.lesson9
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.text.Editable
 import android.text.TextUtils
@@ -27,12 +28,14 @@ class MaterialEdiText(context: Context?, attrs: AttributeSet?) : AppCompatEditTe
     private val TEXT_VERTICAL_OFFSET = dp2px(20f)
     private val PATTIN_LEFT = dp2px(5f)
 
+    private var floatingFraction: Float = 0f
     private var floatingShown = false
-    private var floatingFraction = 0f
 
     init {
+        paint.color = Color.parseColor("#999999")
         paint.textSize = TEXT_SIZE
         setPadding(paddingLeft,(paddingTop + TEXT_SIZE + TEX_MARGIN).toInt(),paddingRight,paddingBottom)
+
         addTextChangedListener(object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {
             }
@@ -41,26 +44,34 @@ class MaterialEdiText(context: Context?, attrs: AttributeSet?) : AppCompatEditTe
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (floatingShown && TextUtils.isEmpty(s)){
-                    val animator = ObjectAnimator.ofFloat(this@MaterialEdiText,"floatingFraction",0f)
-                    animator.start()
+                if (floatingShown && TextUtils.isEmpty(s)){//已经显示过，文字为空    消失
                     floatingShown = false
-                }else if (!floatingShown && !TextUtils.isEmpty(s)){
-                    val animator = ObjectAnimator.ofFloat(this@MaterialEdiText,"floatingFraction",1f)
-                    animator.start()
+                    /*val animator = ObjectAnimator.ofFloat(this@MaterialEdiText,"floatingFraction",0f)
+                    animator.start()*/
+                    getObjAnimator().reverse()
+                }else if (!floatingShown && !TextUtils.isEmpty(s)){//没有显示过，文字不为空，   显示
                     floatingShown = true
+                    /*val animator = ObjectAnimator.ofFloat(this@MaterialEdiText,"floatingFraction",1f)
+                    animator.start()*/
+                    getObjAnimator().start()
                 }
             }
         })
+    }
 
+    fun getObjAnimator(): ObjectAnimator{
+        return ObjectAnimator.ofFloat(this,"floatingFraction",0f,1f)
     }
 
     fun getFloatingFraction(): Float{
         return floatingFraction
     }
-    fun setFloatingFraction(floatingFraction: Float){
-        this.floatingFraction = floatingFraction
+    fun setFloatingFraction(fraction: Float){
+        this.floatingFraction = fraction
         invalidate()
+    }
+    private fun getAnimator(): ObjectAnimator{
+        return ObjectAnimator.ofFloat(this,"floatingFraction",0f,1f)
     }
 
 
@@ -69,10 +80,7 @@ class MaterialEdiText(context: Context?, attrs: AttributeSet?) : AppCompatEditTe
 
         paint.alpha = (0xff * floatingFraction).toInt()
         canvas!!.drawText(hint.toString(),PATTIN_LEFT,TEXT_VERTICAL_OFFSET,paint)
-
-
     }
-
 
 
 }
