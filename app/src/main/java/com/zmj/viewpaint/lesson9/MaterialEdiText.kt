@@ -27,9 +27,12 @@ class MaterialEdiText(context: Context?, attrs: AttributeSet?) : AppCompatEditTe
     private val TEX_MARGIN = dp2px(8f)
     private val TEXT_VERTICAL_OFFSET = dp2px(20f)
     private val PATTIN_LEFT = dp2px(5f)
+    private val TEXTTEXT_ANIMATION_OFFSET = dp2px(16f)
 
     private var floatingFraction: Float = 0f
     private var floatingShown = false
+
+    private var objectAnimator: ObjectAnimator? = null
 
     init {
         paint.color = Color.parseColor("#999999")
@@ -59,8 +62,11 @@ class MaterialEdiText(context: Context?, attrs: AttributeSet?) : AppCompatEditTe
         })
     }
 
-    fun getObjAnimator(): ObjectAnimator{
-        return ObjectAnimator.ofFloat(this,"floatingFraction",0f,1f)
+    private fun getObjAnimator(): ObjectAnimator{
+        if (objectAnimator == null){
+            objectAnimator = ObjectAnimator.ofFloat(this,"floatingFraction",0f,1f)
+        }
+        return objectAnimator!!
     }
 
     fun getFloatingFraction(): Float{
@@ -79,7 +85,8 @@ class MaterialEdiText(context: Context?, attrs: AttributeSet?) : AppCompatEditTe
         super.onDraw(canvas)
 
         paint.alpha = (0xff * floatingFraction).toInt()
-        canvas!!.drawText(hint.toString(),PATTIN_LEFT,TEXT_VERTICAL_OFFSET,paint)
+        val extraOffset = TEXTTEXT_ANIMATION_OFFSET * (1 - floatingFraction)
+        canvas!!.drawText(hint.toString(),PATTIN_LEFT,TEXT_VERTICAL_OFFSET + extraOffset,paint)
     }
 
 
