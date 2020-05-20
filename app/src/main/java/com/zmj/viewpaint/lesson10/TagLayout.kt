@@ -62,7 +62,7 @@ class TagLayout(context: Context?, attrs: AttributeSet?) : ViewGroup(context, at
 
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        for (index in 0..childCount){
+        for (index in 0 until childCount){
             val child = getChildAt(index)
             val rect = childrenBounds[index]
             child.layout(rect.left,rect.top,rect.right,rect.bottom)
