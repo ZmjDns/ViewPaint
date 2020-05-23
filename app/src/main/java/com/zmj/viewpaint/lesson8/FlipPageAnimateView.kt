@@ -60,6 +60,7 @@ class FlipPageAnimateView(context: Context?, attrs: AttributeSet?) : View(contex
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
+        //上半部分
         canvas!!.save()
         canvas.translate(PADDING + bitmap.width/2,PADDING + bitmap.height/2)
         canvas.rotate(-rotationFlip)
@@ -75,6 +76,7 @@ class FlipPageAnimateView(context: Context?, attrs: AttributeSet?) : View(contex
         canvas.drawBitmap(bitmap,PADDING,PADDING,paint)
         canvas.restore()
 
+        //下半部分
         canvas.save()
         canvas.translate(PADDING + bitmap.width/2,PADDING + bitmap.height/2)
         canvas.rotate(-rotationFlip)
