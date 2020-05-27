@@ -81,8 +81,10 @@ class ScalablePracticeView(context: Context?, attrs: AttributeSet?) : View(conte
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas!!)
-
-
+        if(!big){
+            offSetX = 0f
+            offSetY = 0f
+        }
         canvas.translate(offSetX,offSetY)
 
         val scale= smallScale + (bigScale - smallScale) * fraction
@@ -126,11 +128,13 @@ class ScalablePracticeView(context: Context?, attrs: AttributeSet?) : View(conte
         velocityX: Float,
         velocityY: Float
     ): Boolean {
-        scroller.fling(offSetX.toInt(),offSetY.toInt(),velocityX.toInt(),velocityY.toInt(),
-            -((bitmap.width*bigScale-width)/2).toInt(),((bitmap.width*bigScale-width)/2).toInt(),
-        -((bitmap.height*bigScale-height)/2).toInt(),((bitmap.height*bigScale-height)/2).toInt())
+        if(big){
+            scroller.fling(offSetX.toInt(),offSetY.toInt(),velocityX.toInt(),velocityY.toInt(),
+                -((bitmap.width*bigScale-width)/2).toInt(),((bitmap.width*bigScale-width)/2).toInt(),
+                -((bitmap.height*bigScale-height)/2).toInt(),((bitmap.height*bigScale-height)/2).toInt())
 
-        postOnAnimation(this)
+            postOnAnimation(this)
+        }
         return false
     }
 
