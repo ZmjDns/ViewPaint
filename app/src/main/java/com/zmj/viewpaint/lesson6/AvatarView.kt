@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.zmj.viewpaint.R
 import com.zmj.viewpaint.common.dp2px
+import com.zmj.viewpaint.common.getAvatarBit
 
 
 /**
@@ -29,7 +30,7 @@ class AvatarView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
 
     init {
-        bitmap = getAvatar(WIDTH.toInt())
+        bitmap = getAvatarBit(resources,WIDTH)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
