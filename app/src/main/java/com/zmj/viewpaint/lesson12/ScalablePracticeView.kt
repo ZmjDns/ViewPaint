@@ -84,11 +84,11 @@ class ScalablePracticeView(context: Context?, attrs: AttributeSet?) : View(conte
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas!!)
-        if(!big){
+        /*if(!big){     //缩小的时候把偏移也缩小
             offSetX = 0f
             offSetY = 0f
-        }
-        canvas.translate(offSetX,offSetY)
+        }*/
+        canvas.translate(offSetX * fraction,offSetY * fraction)
 
         val scale= smallScale + (bigScale - smallScale) * fraction
         //canvas.save()
