@@ -65,16 +65,16 @@ class ScalablePracticeView(context: Context?, attrs: AttributeSet?) : View(conte
         originalOffsetX = (width.toFloat() - bitmap.width) / 2
         originalOffsetY = (height.toFloat() - bitmap.height) / 2
 
-        smallScale = width.toFloat()/bitmap.width
-        bigScale = height.toFloat()/bitmap.height * OVER_SCALE
+        //smallScale = width.toFloat()/bitmap.width
+        //bigScale = height.toFloat()/bitmap.height * OVER_SCALE
 
-        /*if (bitmap.width.toFloat() / bitmap.height > width.toFloat()/height){//小的状态
+        if (bitmap.width.toFloat() / bitmap.height > width.toFloat()/height){//小的状态
             smallScale = width.toFloat()/bitmap.width
             bigScale = height.toFloat()/bitmap.height * OVER_SCALE
         }else{                                                              //大的状态
             smallScale = height.toFloat()/bitmap.height
             bigScale = width.toFloat()/bitmap.width * OVER_SCALE
-        }*/
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
