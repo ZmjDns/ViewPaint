@@ -56,5 +56,4 @@ class FlipPageView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas?.drawBitmap(bitmap,PADDIND,PADDIND,paint)
         canvas?.restore()
     }
-
 }
