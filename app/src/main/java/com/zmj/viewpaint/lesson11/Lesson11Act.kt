@@ -21,6 +21,6 @@ class Lesson11Act: AppCompatActivity(){
         setContentView(R.layout.act_11)
 
         //val text = findViewById<View>(R.id.view)
-        view.performClick()
+        //view.tooltipText = ""
     }
 }
