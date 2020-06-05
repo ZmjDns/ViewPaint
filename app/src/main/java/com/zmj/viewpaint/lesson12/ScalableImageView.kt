@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
 import android.widget.OverScroller
 import android.widget.Scroller
@@ -34,19 +35,27 @@ class ScalableImageView(context: Context?, attrs: AttributeSet?) : View(context,
     private var bigScale: Float = 0f
     private var big: Boolean = false
 
-    private var scaleFraction: Float = 0f    //0~1
+    /*private var scaleFraction: Float = 0f    //0~1
         get() = field
         set(value) {
             field = value
             invalidate()
+        }*/
+    private var currentScale: Float = 0f
+        get() = field
+        set(value) {
+            field = value
         }
-    private val scaleAnimator by lazy { ObjectAnimator.ofFloat(this,"scaleFraction",0f,1f) }
+
+    private var scaleAnimator:ObjectAnimator? = null
 
     private var offsetX = 0f
     private var offsetY = 0f
     private val scroller = OverScroller(context)
 
     private val henGestureListener = HenGestureListener()
+    private val henScaleListener = HenScaleListener()
+    private val scaleGestureDetector = ScaleGestureDetector(context,henScaleListener)
 
     private var decetor: GestureDetectorCompat = GestureDetectorCompat(context,henGestureListener)
     /*private val decteor2 = GestureDetectorCompat(context,object :GestureDetector.SimpleOnGestureListener(){
@@ -57,6 +66,13 @@ class ScalableImageView(context: Context?, attrs: AttributeSet?) : View(context,
 
     private val henFlingRunner by lazy { HenFlingRunner() }
 
+    private fun getScaleAnimator():ObjectAnimator{
+        if (scaleAnimator == null){
+            scaleAnimator = ObjectAnimator.ofFloat(this,"currentScale",0f)
+        }
+        scaleAnimator!!.setFloatValues(smallScale,bigScale)
+        return scaleAnimator!!
+    }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -72,22 +88,25 @@ class ScalableImageView(context: Context?, attrs: AttributeSet?) : View(context,
             smallScale = height.toFloat()/bitmap.height
             bigScale = width.toFloat()/bitmap.width * OVER_SCALE_FACTOR
         }
+        currentScale = smallScale
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        return decetor.onTouchEvent(event)
+        //return decetor.onTouchEvent(event)
+        return scaleGestureDetector.onTouchEvent(event)
     }
 
     override fun onDraw(canvas: Canvas?) {
         //canvas执行顺序是倒序的
         super.onDraw(canvas!!)
 
+        val scaleFraction = (currentScale - smallScale)/(bigScale - smallScale)
         //缩放之后的第二次偏移
         canvas.translate(offsetX * scaleFraction,offsetY * scaleFraction)
 
         //val scale = if (big) bigScale else smallScale
-        val scale = smallScale + (bigScale - smallScale) * scaleFraction
-        canvas.scale(scale,scale,width/2f,height/2f)
+        //val scale = smallScale + (bigScale - smallScale) * scaleFraction
+        canvas.scale(currentScale,currentScale,width/2f,height/2f)
         canvas.drawBitmap(bitmap,originalOffSetX,originalOffSetY,paint)
     }
 
@@ -155,11 +174,11 @@ class ScalableImageView(context: Context?, attrs: AttributeSet?) : View(context,
         override fun onDoubleTap(e: MotionEvent?): Boolean {
             big = !big
             if (big){
-                offsetX = (e!!.x - width/2) - (e.x - width/2) * scaleFraction
-                offsetY = (e.y - height/2) - (e.y - height/2) * scaleFraction
-                scaleAnimator.start()
+                offsetX = (e!!.x - width/2) - (e.x - width/2) * bigScale/smallScale
+                offsetY = (e.y - height/2) - (e.y - height/2) * bigScale/smallScale
+                getScaleAnimator().start()
             }else{
-                scaleAnimator.reverse()
+                getScaleAnimator().reverse()
             }
            return false
         }
@@ -184,5 +203,27 @@ class ScalableImageView(context: Context?, attrs: AttributeSet?) : View(context,
                 postOnAnimation(this)
             }
         }
+    }
+
+    inner class HenScaleListener: ScaleGestureDetector.OnScaleGestureListener{
+        var initialScale: Float = 0f
+
+        override fun onScale(detector: ScaleGestureDetector?): Boolean {
+            currentScale = detector!!.scaleFactor
+            invalidate()
+            return false
+        }
+
+        override fun onScaleBegin(detector: ScaleGestureDetector?): Boolean {
+            initialScale = currentScale
+            return true
+        }
+
+        override fun onScaleEnd(detector: ScaleGestureDetector?) {
+
+        }
+
+
+
     }
 }
