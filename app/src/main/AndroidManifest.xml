@@ -10,17 +10,32 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".lesson6.SixAct">
-
-        </activity>
-        <activity android:name=".lesson7.ActSeven" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".lesson6.SixAct">
+
+        </activity>
+        <activity android:name=".lesson7.ActSeven" >
+
+        </activity>
+        <activity android:name=".lesson8.AnimatorAct" >
+
+        </activity>
+        <activity android:name=".lesson9.BitmapDrawableAct">
+
+        </activity>
+        <activity android:name=".lesson10.LayoutLesson10Act" >
+
+        </activity>
+        <activity android:name=".lesson11.Lesson11Act" >
+
+        </activity>
+        <activity android:name=".lesson12.Lesson12Act">
+
         </activity>
     </application>
 
