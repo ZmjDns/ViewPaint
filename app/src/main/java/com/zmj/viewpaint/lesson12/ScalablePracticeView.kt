@@ -51,10 +51,6 @@ class ScalablePracticeView(context: Context?, attrs: AttributeSet?) : View(conte
 
     private val animator by lazy {ObjectAnimator.ofFloat(this,"fraction",0f,1f)}
 
-    /*init {
-        detector.setOnDoubleTapListener(this)
-    }*/
-
     private var big = false
 
     private val scroller by lazy { OverScroller(context) }
@@ -160,6 +156,9 @@ class ScalablePracticeView(context: Context?, attrs: AttributeSet?) : View(conte
         Log.i(TAG,"双击了.....")
         big = !big
         if(big){
+            //解决双击之后放大的位置偏离双击的点
+            offSetX = (e!!.x - width/2f) - (e.x - width/2f) * (bigScale/smallScale)
+            offSetY = (e.y - height/2f) - (e.y - height/2f) * (bigScale/smallScale)
             animator.start()
         }else{
             animator.reverse()
