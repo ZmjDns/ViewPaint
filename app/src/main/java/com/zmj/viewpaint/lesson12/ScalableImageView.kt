@@ -45,6 +45,7 @@ class ScalableImageView(context: Context?, attrs: AttributeSet?) : View(context,
         get() = field
         set(value) {
             field = value
+            invalidate()
         }
 
     private var scaleAnimator:ObjectAnimator? = null
@@ -92,8 +93,12 @@ class ScalableImageView(context: Context?, attrs: AttributeSet?) : View(context,
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        //return decetor.onTouchEvent(event)
-        return scaleGestureDetector.onTouchEvent(event)
+        var result = scaleGestureDetector.onTouchEvent(event)
+        //判断是双指捏撑还是双击缩放
+        if (!scaleGestureDetector.isInProgress){
+            result = decetor.onTouchEvent(event)
+        }
+        return result
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -208,22 +213,18 @@ class ScalableImageView(context: Context?, attrs: AttributeSet?) : View(context,
     inner class HenScaleListener: ScaleGestureDetector.OnScaleGestureListener{
         var initialScale: Float = 0f
 
-        override fun onScale(detector: ScaleGestureDetector?): Boolean {
-            currentScale = detector!!.scaleFactor
-            invalidate()
-            return false
-        }
-
         override fun onScaleBegin(detector: ScaleGestureDetector?): Boolean {
             initialScale = currentScale
-            return true
+            return true     //确定要消费这个事件
+        }
+        override fun onScale(detector: ScaleGestureDetector?): Boolean {
+            currentScale = initialScale * detector!!.scaleFactor
+            invalidate()
+            return false
         }
 
         override fun onScaleEnd(detector: ScaleGestureDetector?) {
 
         }
-
-
-
     }
 }
