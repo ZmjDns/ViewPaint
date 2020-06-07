@@ -23,8 +23,7 @@ import kotlin.properties.Delegates
  * Time : 2020/5/25
  * Description :
  */
-class ScalablePracticeView(context: Context?, attrs: AttributeSet?) : View(context, attrs),
-    GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, Runnable {
+class ScalablePracticeView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     private val TAG = this.javaClass.name
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -40,7 +39,10 @@ class ScalablePracticeView(context: Context?, attrs: AttributeSet?) : View(conte
     private var bigScale: Float = 0f
     private val OVER_SCALE = 1.5f
 
-    private val detector = GestureDetectorCompat(context,this)
+    private val myFingerGestureListener = MyFingerGestureListener()
+    private val detector = GestureDetectorCompat(context,myFingerGestureListener)
+
+    private val flingRunner by lazy { FlingRunner() }
 
     private var fraction: Float = 0f
         get() = field
@@ -93,85 +95,88 @@ class ScalablePracticeView(context: Context?, attrs: AttributeSet?) : View(conte
         //canvas.restore()
     }
 
-    override fun onDown(e: MotionEvent?): Boolean {
-        return true
-    }
-    override fun onShowPress(e: MotionEvent?) {
-    }
-
-    override fun onSingleTapUp(e: MotionEvent?): Boolean {
-        return false
-    }
-
-    override fun onScroll(
-        down: MotionEvent?,
-        event: MotionEvent?,
-        distanceX: Float,
-        distanceY: Float
-    ): Boolean {
-        if(big){
-            offSetX -= distanceX
-            offSetX = Math.min(offSetX,(bitmap.width*bigScale-width)/2)
-            offSetX = Math.max(offSetX,-(bitmap.width*bigScale-width)/2)
-            offSetY -= distanceY
-            offSetY = Math.min(offSetY,(bitmap.height*bigScale -height)/2)
-            offSetY = Math.max(offSetY,-(bitmap.height*bigScale -height)/2)
-            invalidate()
+    inner class MyFingerGestureListener: GestureDetector.SimpleOnGestureListener() {//GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener
+        override fun onDown(e: MotionEvent?): Boolean {
+            return true
         }
-        return false
-    }
-
-    override fun onFling(
-        down: MotionEvent?,
-        event: MotionEvent?,
-        velocityX: Float,
-        velocityY: Float
-    ): Boolean {
-        if(big){
-            scroller.fling(offSetX.toInt(),offSetY.toInt(),velocityX.toInt(),velocityY.toInt(),
-                -((bitmap.width*bigScale-width)/2).toInt(),((bitmap.width*bigScale-width)/2).toInt(),
-                -((bitmap.height*bigScale-height)/2).toInt(),((bitmap.height*bigScale-height)/2).toInt())
-
-            postOnAnimation(this)
+        override fun onShowPress(e: MotionEvent?) {
         }
-        return false
-    }
 
-    override fun run() {
-        if (scroller.computeScrollOffset()){
-            offSetX = scroller.currX.toFloat()
-            offSetY = scroller.currY.toFloat()
-            invalidate()
+        override fun onSingleTapUp(e: MotionEvent?): Boolean {
+            return false
+        }
 
-            postOnAnimation(this)
+        override fun onScroll(
+            down: MotionEvent?,
+            event: MotionEvent?,
+            distanceX: Float,
+            distanceY: Float
+        ): Boolean {
+            if(big){
+                offSetX -= distanceX
+                offSetX = Math.min(offSetX,(bitmap.width*bigScale-width)/2)
+                offSetX = Math.max(offSetX,-(bitmap.width*bigScale-width)/2)
+                offSetY -= distanceY
+                offSetY = Math.min(offSetY,(bitmap.height*bigScale -height)/2)
+                offSetY = Math.max(offSetY,-(bitmap.height*bigScale -height)/2)
+                invalidate()
+            }
+            return false
+        }
+
+        override fun onFling(
+            down: MotionEvent?,
+            event: MotionEvent?,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
+            if(big){
+                scroller.fling(offSetX.toInt(),offSetY.toInt(),velocityX.toInt(),velocityY.toInt(),
+                    -((bitmap.width*bigScale-width)/2).toInt(),((bitmap.width*bigScale-width)/2).toInt(),
+                    -((bitmap.height*bigScale-height)/2).toInt(),((bitmap.height*bigScale-height)/2).toInt())
+
+                postOnAnimation(flingRunner)
+            }
+            return false
+        }
+
+        override fun onLongPress(e: MotionEvent?) {
+
+        }
+
+        override fun onDoubleTap(e: MotionEvent?): Boolean {
+            Log.i(TAG,"双击了.....")
+            big = !big
+            if(big){
+                //解决双击之后放大的位置偏离双击的点
+                offSetX = (e!!.x - width/2f) - (e.x - width/2f) * (bigScale/smallScale)
+                offSetY = (e.y - height/2f) - (e.y - height/2f) * (bigScale/smallScale)
+                animator.start()
+            }else{
+                animator.reverse()
+            }
+            //invalidate()
+            return false
+        }
+
+        override fun onDoubleTapEvent(e: MotionEvent?): Boolean {
+            return false
+        }
+
+        override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+            return false
         }
     }
 
+    inner class FlingRunner: Runnable{
+        override fun run() {
+            if (scroller.computeScrollOffset()){
+                offSetX = scroller.currX.toFloat()
+                offSetY = scroller.currY.toFloat()
+                invalidate()
 
-    override fun onLongPress(e: MotionEvent?) {
-
-    }
-
-    override fun onDoubleTap(e: MotionEvent?): Boolean {
-        Log.i(TAG,"双击了.....")
-        big = !big
-        if(big){
-            //解决双击之后放大的位置偏离双击的点
-            offSetX = (e!!.x - width/2f) - (e.x - width/2f) * (bigScale/smallScale)
-            offSetY = (e.y - height/2f) - (e.y - height/2f) * (bigScale/smallScale)
-            animator.start()
-        }else{
-            animator.reverse()
+                postOnAnimation(this)
+            }
         }
-        //invalidate()
-        return false
-    }
-
-    override fun onDoubleTapEvent(e: MotionEvent?): Boolean {
-        return false
-    }
-
-    override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
-        return false
     }
 }
