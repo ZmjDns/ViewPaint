@@ -14,7 +14,7 @@ import com.zmj.viewpaint.common.getAvatarBit
  * Blog : https://blog.csdn.net/Zmj_Dns
  * GitHub : https://github.com/ZmjDns
  * Time : 2020/6/7
- * Description :
+ * Description :多点触控事件接管（后来的接管触摸事件）
  */
 class MultiTouchView1(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -26,19 +26,47 @@ class MultiTouchView1(context: Context?, attrs: AttributeSet?) : View(context, a
     private var offStY = 0f
     private var originalOffsetX = 0f
     private var originalOffsetY = 0f
+    private var trackingPointerId: Int = 0
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when(event!!.actionMasked){
             MotionEvent.ACTION_DOWN -> {
+                trackingPointerId = event.getPointerId(0)
                 downX = event.x
                 downY = event.y
                 originalOffsetX = offSetX
                 originalOffsetY = offStY
             }
             MotionEvent.ACTION_MOVE -> {
-                offSetX = originalOffsetX + event.x - downX
-                offStY = originalOffsetY + event.y - downY
+                val index = event.findPointerIndex(trackingPointerId)
+                offSetX = originalOffsetX + event.getX(index) - downX
+                offStY = originalOffsetY + event.getY(index) - downY
                 invalidate()
+            }
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                val actionIndex = event.actionIndex
+                trackingPointerId = event.getPointerId(actionIndex)
+                downX = event.getX(actionIndex)
+                downY = event.getY(actionIndex)
+                originalOffsetX = offSetX
+                originalOffsetY = offStY
+            }
+            MotionEvent.ACTION_POINTER_UP -> {
+                val actioIndex = event.actionIndex
+                val pointId = event.getPointerId(actioIndex)
+                if (pointId == trackingPointerId){
+                    var newIndex: Int
+                    if (actioIndex == event.pointerCount - 1){
+                        newIndex = event.pointerCount - 2
+                    }else{
+                        newIndex = event.pointerCount - 1
+                    }
+                    trackingPointerId = event.getPointerId(newIndex)
+                    downX = event.getX(actioIndex)
+                    downY = event.getY(actioIndex)
+                    originalOffsetX = downX
+                    originalOffsetY = downY
+                }
             }
         }
         return true
@@ -50,7 +78,4 @@ class MultiTouchView1(context: Context?, attrs: AttributeSet?) : View(context, a
         super.onDraw(canvas!!)
         canvas.drawBitmap(bitmap,offSetX,offStY,paint)
     }
-
-
-
 }
