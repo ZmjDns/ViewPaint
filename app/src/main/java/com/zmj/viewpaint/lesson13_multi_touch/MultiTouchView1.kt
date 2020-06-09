@@ -15,6 +15,10 @@ import com.zmj.viewpaint.common.getAvatarBit
  * GitHub : https://github.com/ZmjDns
  * Time : 2020/6/7
  * Description :多点触控事件接管（后来的接管触摸事件）
+ * 触摸反馈
+ * 1.接力型
+ * 2.协助型
+ * 3.互不干扰
  */
 class MultiTouchView1(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -55,7 +59,7 @@ class MultiTouchView1(context: Context?, attrs: AttributeSet?) : View(context, a
                 val actioIndex = event.actionIndex
                 val pointId = event.getPointerId(actioIndex)
                 if (pointId == trackingPointerId){
-                    var newIndex: Int
+                    val newIndex: Int
                     if (actioIndex == event.pointerCount - 1){
                         newIndex = event.pointerCount - 2
                     }else{
