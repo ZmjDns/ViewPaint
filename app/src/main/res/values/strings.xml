@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ViewPaint</string>
+    <string name="lesson6">lesson6</string>
+    <string name="lesson7">lesson7</string>
+    <string name="lesson8">lesson8</string>
+    <string name="lesson9">lesson9</string>
+    <string name="lesson10">lesson10</string>
+    <string name="lesson11">lesson11</string>
+    <string name="lesson12">lesson12</string>
+    <string name="lesson13">lesson13MultiTouch</string>
 </resources>
