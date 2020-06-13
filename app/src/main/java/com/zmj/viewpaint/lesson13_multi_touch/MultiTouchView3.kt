@@ -6,9 +6,11 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.util.SparseArray
 import android.view.MotionEvent
 import android.view.MotionEvent.*
 import android.view.View
+import androidx.core.util.size
 import com.zmj.viewpaint.common.dp2px
 
 /**
@@ -21,7 +23,7 @@ import com.zmj.viewpaint.common.dp2px
 class MultiTouchView3(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val path = Path()
+    private val paths = SparseArray<Path>()
 
     init {
         paint.style = Paint.Style.STROKE
@@ -34,28 +36,37 @@ class MultiTouchView3(context: Context?, attrs: AttributeSet?) : View(context, a
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         when(event!!.actionMasked){
-            ACTION_DOWN -> {
-                path.reset()
-                path.moveTo(event.getX(),event.y)
+            ACTION_DOWN, ACTION_POINTER_DOWN-> {
+                val pointerIndex = event.actionIndex      //pointIndex值不可靠会被复用   pointId不会
+                val pointerId = event.getPointerId(pointerIndex)
+                val path = Path()
+                path.moveTo(event.getX(pointerIndex),event.getY(pointerIndex))
+                paths.append(pointerId,path)
             }
             ACTION_MOVE -> {
-                path.lineTo(event.x,event.y)
+                for (i in 0 until event.pointerCount){
+                    val pointerId = event.getPointerId(i)
+                    val path = paths[pointerId]
+                    path.lineTo(event.getX(i),event.getY(i))
+                }
                 invalidate()
             }
-            ACTION_UP -> {
+            ACTION_UP, ACTION_POINTER_UP -> {
+                val pointerIndex = event.actionIndex
+                val pointerId = event.getPointerId(pointerIndex)
+                val path = paths[pointerId]
                 path.reset()
                 invalidate()
             }
         }
-
         return true
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas!!)
-
-        canvas.drawPath(path,paint)
-
+        for (i in 0 until paths.size()){
+            canvas.drawPath(paths[i], paint)
+        }
     }
 
 }
