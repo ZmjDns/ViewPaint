@@ -120,6 +120,7 @@ class TwoPager(context: Context?, attrs: AttributeSet?) : ViewGroup(context, att
         return true
     }
 
+    //不需要实现runnable，此方法会在onDraw方法中多次调用刷新界面
     override fun computeScroll() {
         if (overScroller.computeScrollOffset()){
             scrollTo(overScroller.currX,overScroller.currY)
