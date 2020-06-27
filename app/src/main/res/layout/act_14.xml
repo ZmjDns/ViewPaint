@@ -7,6 +7,14 @@
 
     <com.zmj.viewpaint.lesson14_viewpager.TwoPager
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" android:visibility="gone"/>
+
+
+    <com.zmj.viewpaint.lesson14_viewpager.MyFlowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    </com.zmj.viewpaint.lesson14_viewpager.MyFlowLayout>
 
 </LinearLayout>
