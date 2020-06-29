@@ -3,6 +3,7 @@ package com.zmj.viewpaint.lesson15_drag_nestedScroll.dragview
 import android.content.Context
 import android.icu.util.MeasureUnit
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -58,29 +59,24 @@ class DragHelperGridView(context: Context?, attrs: AttributeSet?) : ViewGroup(co
         return true
     }
 
-    /*override fun computeScroll() {
+    //会在View的OnDraw方法中不断被调用，替代了Runnable接口功能
+    override fun computeScroll() {
         if (dragHelper.continueSettling(true)){
             ViewCompat.postInvalidateOnAnimation(this)
         }
-    }*/
+    }
 
 
     //拖拽回调
     inner class DragCallBack: ViewDragHelper.Callback() {
 
+        var capturedLeft = 0
+        var capturedTop = 0
+
         //必须实现的三个方法
         override fun tryCaptureView(child: View, pointerId: Int): Boolean {
-            return true     //拖拽成功时返回true
+            return true     //拖拽成功时(即View跟着手指在动)返回true
         }
-
-        /*override fun onViewDragStateChanged(state: Int) {
-            if (state == ViewDragHelper.STATE_IDLE){
-                val capturedView = dragHelper.capturedView
-                if (capturedView != null){
-                    capturedView.elevation = capturedView.elevation - 1
-                }
-            }
-        }*/
 
         override fun clampViewPositionHorizontal(child: View, left: Int, dx: Int): Int {
             return left     //返回被推拽view的left（距离左边距的距离）
@@ -88,9 +84,34 @@ class DragHelperGridView(context: Context?, attrs: AttributeSet?) : ViewGroup(co
         override fun clampViewPositionVertical(child: View, top: Int, dy: Int): Int {
             return top      //返回被推拽view的top（距离边距边距的距离）
         }
+
+        override fun onViewDragStateChanged(state: Int) {
+            if (state == ViewDragHelper.STATE_IDLE){
+                val capturedView = dragHelper.capturedView
+                if (capturedView != null){
+                    capturedView.elevation = capturedView.elevation - 1
+                }
+            }
+        }
+
+        override fun onViewCaptured(capturedChild: View, activePointerId: Int) {
+            capturedChild.elevation = elevation + 1
+            //记录拖拽之前的位置，在松手以后，将view移动至原来的位置
+            capturedLeft = capturedChild.left
+            capturedTop = capturedChild.top
+            Log.i("DragHelperGridView","capturedLeft: $capturedLeft    capturedTop: $capturedTop")
+        }
+
+        //移动过程中的变化
+        override fun onViewPositionChanged(changedView: View, left: Int, top: Int, dx: Int, dy: Int) {
+
+
+        }
+
+        override fun onViewReleased(releasedChild: View, xvel: Float, yvel: Float) {
+            //Log.i("DragHelperGridView","capturedLeft: $capturedLeft    capturedTop: $capturedTop")
+            dragHelper.settleCapturedViewAt(capturedLeft,capturedTop)
+            postInvalidateOnAnimation()
+        }
     }
-
-
-
-
 }
