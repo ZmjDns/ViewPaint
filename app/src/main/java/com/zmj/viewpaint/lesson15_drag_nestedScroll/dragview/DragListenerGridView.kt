@@ -86,7 +86,7 @@ class DragListenerGridView(context: Context?, attrs: AttributeSet?) : ViewGroup(
                 DragEvent.ACTION_DRAG_ENTERED -> {//拖拽至进入某个区域
                     if (event.localState != v){//进入别的View区域
                         //执行排序操作
-
+                        sortView(v!!)
                     }
                 }
                 DragEvent.ACTION_DRAG_EXITED -> {//退出
@@ -95,8 +95,45 @@ class DragListenerGridView(context: Context?, attrs: AttributeSet?) : ViewGroup(
                     v?.visibility = View.VISIBLE
                 }
             }
-
             return true
+        }
+
+    }
+
+    private fun sortView(targetView: View) {
+        var draggedIndex = -1
+        var targetIndex = -1
+
+        for (i in 0 until childCount){
+            val child = orderedChildren[i]
+            if (targetView == child){
+                targetIndex = i
+            }else if (child == draggedView){
+                draggedIndex = i
+            }
+        }
+
+        if (targetIndex < draggedIndex){
+            orderedChildren.removeAt(draggedIndex)
+            orderedChildren.add(targetIndex,draggedView)
+        }else if (targetIndex < draggedIndex){
+            orderedChildren.removeAt(draggedIndex)
+            orderedChildren.add(targetIndex,draggedView)
+        }
+
+        var childLeft = 0
+        var childTop = 0
+        val childWidth = width / COLUMNS
+        val childHeight = height / ROWS
+
+        for (i in 0 until orderedChildren.size){
+            val child = orderedChildren[i]
+            childLeft = i%2 * childWidth
+            childTop = i/2 * childHeight
+
+            child.animate()
+                .translationX(childLeft.toFloat())
+                .translationY(childTop.toFloat()).duration = 150
         }
 
     }
