@@ -30,6 +30,7 @@ class DragToCollectLayout(context: Context?, attrs: AttributeSet?) : RelativeLay
         override fun onLongClick(v: View?): Boolean {
             val imageData = ClipData.newPlainText("name",v?.contentDescription)
 
+            //此方法比较重，能实现开进程传递数据，（第二个参数）
             return ViewCompat.startDragAndDrop(v!!,imageData,DragShadowBuilder(v),null,0)
         }
     }
@@ -40,7 +41,7 @@ class DragToCollectLayout(context: Context?, attrs: AttributeSet?) : RelativeLay
         logo = findViewById(R.id.logo)
         ll_colllect = findViewById(R.id.ll_collect)
 
-        avatar.setOnLongClickListener(dragStarter)
+        avatar.setOnLongClickListener(dragStarter) //在长按监听中实现拖拽
         logo.setOnLongClickListener(dragStarter)
         ll_colllect.setOnDragListener(collectDragListener)
     }
@@ -49,7 +50,7 @@ class DragToCollectLayout(context: Context?, attrs: AttributeSet?) : RelativeLay
     inner class CollectDragListener: OnDragListener{
         override fun onDrag(v: View?, event: DragEvent?): Boolean {
             when(event?.action){
-                DragEvent.ACTION_DROP -> {
+                DragEvent.ACTION_DROP -> {  //接收ACTION_DROP时传来的数据
                     if (v is LinearLayout){
                         val textView = TextView(context)
                         textView.textSize = 16f
