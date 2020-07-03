@@ -26,14 +26,21 @@ class DragToCollectLayout(context: Context?, attrs: AttributeSet?) : RelativeLay
     private lateinit var ll_colllect: LinearLayout
     private val collectDragListener = CollectDragListener()
 
-    private val dragStarter = object :OnLongClickListener{
-        override fun onLongClick(v: View?): Boolean {
-            val imageData = ClipData.newPlainText("name",v?.contentDescription)
+    private val dragStarter = OnLongClickListener { v ->
+        val imageData = ClipData.newPlainText("name",v?.contentDescription)
+        //此方法比较重，能实现开进程传递数据，（第二个参数）
+        ViewCompat.startDragAndDrop(v!!,imageData,DragShadowBuilder(v),null,0)
+    }
 
-            //此方法比较重，能实现开进程传递数据，（第二个参数）
-            return ViewCompat.startDragAndDrop(v!!,imageData,DragShadowBuilder(v),null,0)
+    private val testLongClick = object : OnLongClickListener{
+        override fun onLongClick(v: View?): Boolean {
+            val clipData = ClipData.newPlainText("name",v?.contentDescription)
+
+            //此方法较轻，在本应用内传递数据
+            return ViewCompat.startDragAndDrop(v!!,null,DragShadowBuilder(v),clipData,0)
         }
     }
+
     override fun onFinishInflate() {
         super.onFinishInflate()
 
@@ -41,8 +48,8 @@ class DragToCollectLayout(context: Context?, attrs: AttributeSet?) : RelativeLay
         logo = findViewById(R.id.logo)
         ll_colllect = findViewById(R.id.ll_collect)
 
-        avatar.setOnLongClickListener(dragStarter) //在长按监听中实现拖拽
-        logo.setOnLongClickListener(dragStarter)
+        avatar.setOnLongClickListener(testLongClick) //在长按监听中实现拖拽
+        logo.setOnLongClickListener(testLongClick)
         ll_colllect.setOnDragListener(collectDragListener)
     }
 
@@ -54,18 +61,13 @@ class DragToCollectLayout(context: Context?, attrs: AttributeSet?) : RelativeLay
                     if (v is LinearLayout){
                         val textView = TextView(context)
                         textView.textSize = 16f
-                        textView.text = event.clipData.getItemAt(0).text
+                        //textView.text = event.clipData.getItemAt(0).text  //获取data
+                        textView.text = (event.localState as ClipData).getItemAt(0).text    //获取localData
                         v.addView(textView)
                     }
                 }
             }
             return true
         }
-
     }
-
-
-
-
-
 }
