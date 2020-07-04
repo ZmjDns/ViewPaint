@@ -16,7 +16,7 @@ class Lesson15DragAct: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.act_15_draglistener)
+        setContentView(R.layout.drag_up_down_layout)
 
     }
 }
