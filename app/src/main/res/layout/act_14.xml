@@ -7,12 +7,21 @@
 
     <com.zmj.viewpaint.lesson14_viewpager.TwoPager
         android:layout_width="match_parent"
-        android:layout_height="match_parent" android:visibility="gone"/>
+        android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#795548"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#507948"/>
+    </com.zmj.viewpaint.lesson14_viewpager.TwoPager>
 
 
     <com.zmj.viewpaint.lesson14_viewpager.MyFlowLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" android:visibility="gone">
 
 
     </com.zmj.viewpaint.lesson14_viewpager.MyFlowLayout>
