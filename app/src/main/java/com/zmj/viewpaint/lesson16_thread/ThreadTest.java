@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -20,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  * Time : 2020/6/17
  * Description :
  */
-public class Main {
+public class ThreadTest {
 
     public static void main(String[] args){
 
@@ -70,6 +71,27 @@ public class Main {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void threadFactory(){
+        ThreadFactory threadFactory = new ThreadFactory() {
+            int count = 0;
+            @Override
+            public Thread newThread(Runnable r) {
+                count++;
+                return new Thread(r,"Thrad-" + count);
+            }
+        };
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(Thread.currentThread().getName() + "Running");
+            }
+        };
+
+        Thread thread1 = threadFactory.newThread(runnable);
+
 
     }
 
