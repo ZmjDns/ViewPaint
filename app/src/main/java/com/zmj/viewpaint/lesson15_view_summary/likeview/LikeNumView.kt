@@ -1,10 +1,7 @@
 package com.zmj.viewpaint.lesson15_view_summary.likeview
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Rect
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import com.zmj.viewpaint.common.dp2px
@@ -17,7 +14,12 @@ import kotlin.math.max
  * Time : 2020/7/7
  * Description :
  */
-class LikeNumView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
+class LikeNumView : View {
+
+    constructor(context: Context?): super(context)
+    constructor(context: Context?, attrs: AttributeSet?): super(context, attrs)
+    constructor(context: Context?,attrs: AttributeSet?,styleDef: Int): super(context, attrs,styleDef)
+
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val textSize = dp2px(12f)
@@ -32,7 +34,7 @@ class LikeNumView(context: Context?, attrs: AttributeSet?) : View(context, attrs
 
     private var centerY: Int = 0
 
-    private val translationY: Int = 0
+    private var translationY: Int = 0
 
     init {
         paint.textSize = textSize
@@ -70,7 +72,7 @@ class LikeNumView(context: Context?, attrs: AttributeSet?) : View(context, attrs
         }
     }
 
-    protected fun init() {
+    fun init() {
         mCurNum = newNum
     }
     override fun onDraw(canvas: Canvas?) {
@@ -129,6 +131,11 @@ class LikeNumView(context: Context?, attrs: AttributeSet?) : View(context, attrs
         paint.alpha = 255 - alpha
         canvas.drawText(newNum,leftX.toFloat(),newBaseY + transY.toFloat(),paint)
         paint.alpha = 255
+    }
+
+    fun setTranslationY(translation: Int){
+        this.translationY = translation
+        invalidate()
     }
 
     fun setLiked(liked: Boolean){
