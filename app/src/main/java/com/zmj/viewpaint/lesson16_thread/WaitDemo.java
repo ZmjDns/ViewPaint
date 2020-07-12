@@ -60,8 +60,4 @@ public class WaitDemo {
 
         thread2.start();
     }
-
-
-
-
 }
