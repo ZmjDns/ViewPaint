@@ -18,6 +18,7 @@ import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -84,6 +85,50 @@ public class RxAndroidAct extends AppCompatActivity {
                     @Override
                     public void onSuccess(String s) {
                         text.setText(s);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
+
+        Single<String> single = Single.just("1");
+        single = single.subscribeOn(Schedulers.io());
+        single = single.subscribeOn(AndroidSchedulers.mainThread());
+        single.subscribe(new SingleObserver<String>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onSuccess(String s) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+
+        Single.just(1)
+                .map(new Function<Integer, String>() {
+                    @Override  //将要发送的的数据转换成需要的数据
+                    public String apply(Integer integer) throws Exception {
+                        return String.valueOf(integer);
+                    }
+                })
+                .subscribe(new SingleObserver<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+
                     }
 
                     @Override
