@@ -23,7 +23,7 @@ public class WaitDemo {
                 //此处是wait（）而不是  Thread.wait()
                 //因为方法上synchronized自动持有了此类的monitor与wait（）是一样的，
                 // 以便于唤醒notifyAll()等待的线程
-                wait();
+                wait();//object的方法
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
