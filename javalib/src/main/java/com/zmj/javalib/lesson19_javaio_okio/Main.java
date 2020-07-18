@@ -10,10 +10,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.RandomAccessFile;
 import java.io.Reader;
 import java.io.Writer;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channel;
+import java.nio.channels.FileChannel;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -32,7 +42,10 @@ class Main {
 
         //javaIo3();
         //javaIo4();
-        javaIo5();
+        //javaIo5();
+
+//        nio1();
+        nio2();
 
     }
 
@@ -108,6 +121,45 @@ class Main {
                 writer.flush();     //将写完的数据冲出去，否则有可能处于缓冲区，而客户端收不到数据
             }
         }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    private static void nio1(){
+        try {
+            RandomAccessFile file = new RandomAccessFile("./19_io.txt","r");
+            FileChannel channel = file.getChannel();
+            ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+            channel.read(byteBuffer);
+//            byteBuffer.limit(byteBuffer.position());
+//            byteBuffer.position(0);
+            byteBuffer.flip();
+
+            System.out.println(Charset.defaultCharset().decode(byteBuffer));
+            byteBuffer.clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void nio2(){
+        try {
+            ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+            serverSocketChannel.bind(new InetSocketAddress(8099));
+//            serverSocketChannel.configureBlocking(false);   //配置非阻塞
+//            Selector selector = Selector.open();
+//            serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+            SocketChannel socketChannel = serverSocketChannel.accept();
+            ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+            while (socketChannel.read(byteBuffer) != -1){
+                byteBuffer.flip();
+                //System.out.println("输出前：" + Charset.defaultCharset().decode(byteBuffer));
+                socketChannel.write(byteBuffer);
+                //System.out.println("输出后：" + Charset.defaultCharset().decode(byteBuffer));
+                byteBuffer.clear();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
