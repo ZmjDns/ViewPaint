@@ -2,12 +2,15 @@ package com.zmj.javalib.lesson19_javaio_okio;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
@@ -25,6 +28,12 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+
+import okio.Buffer;
+import okio.Okio;
+import okio.Sink;
+import okio.Source;
+
 
 /**
  * Author : Zmj
@@ -45,7 +54,11 @@ class Main {
         //javaIo5();
 
 //        nio1();
-        nio2();
+//        nio2();
+
+
+//        okio1();
+        okio2();
 
     }
 
@@ -162,6 +175,64 @@ class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    private static void okio1(){
+        try(Source source = Okio.source(new File("./19_io.txt"))
+            //ource source = Okio.buffer(Okio.source(new File("./19_io.txt")))
+        ) {
+            Buffer buffer = new Buffer();
+            source.read(buffer,1024);
+
+            //System.out.println(buffer.readUtf8());
+            System.out.println(buffer.readUtf8Line());
+            System.out.println(buffer.readUtf8Line());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try(Sink sink = Okio.sink(new File("./19_io.txt"))){
+            Buffer buffer = new Buffer();
+
+            buffer.writeUtf8("写入数据:\n");
+            buffer.writeUtf8("hello OkIo");
+            sink.write(buffer,buffer.size());
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private static void okio2(){
+
+        //java的输出io
+        try(ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("./19_io.txt"))){
+            //objectOutputStream.writeUTF("abc");
+            objectOutputStream.writeBoolean(true);
+            //objectOutputStream.writeChar('0');
+            //objectOutputStream.writeObject(new Throwable("Throwable"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //java结合Okio的Buffer进行io操作
+        //即Okio与java传统io的对接
+        Buffer buffer = new Buffer();
+        try (//可以看做往buffer中写入东西，OKio的Bufffer可以被看作外部对象
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(buffer.outputStream())){
+            objectOutputStream.writeUTF("abc");
+            objectOutputStream.writeBoolean(true);
+            objectOutputStream.writeChar('0');
+            objectOutputStream.flush();     //一定要记得flush（），不然还没写入，后面是读不到数据，报错的
+
+            ObjectInputStream objectInputStream = new ObjectInputStream(buffer.inputStream());
+            System.out.println(objectInputStream.readUTF());
+            System.out.println(objectInputStream.readBoolean());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 
