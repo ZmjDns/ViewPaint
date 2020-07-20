@@ -17,9 +17,30 @@ android {
     }
 
     buildTypes {
+        //与不同性值的功能结合打包
+        internal{
+            initWith debug
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //渠道包
+    flavorDimensions 'price','nation'
+    productFlavors{
+        free{
+            dimension 'price'
+        }
+        paid{
+            dimension 'price'
+        }
+        china{
+            dimension 'nation'
+        }
+        global{
+            dimension 'nation'
         }
     }
 
