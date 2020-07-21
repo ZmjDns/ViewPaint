@@ -18,8 +18,12 @@ android {
 
     buildTypes {
         //与不同性值的功能结合打包
-        internal{
-            initWith debug
+//        internal{
+//            initWith debug
+//        }
+        debug{
+            //分包
+            multiDexKeepFile file('multidex-config.txt')
         }
         release {
             minifyEnabled false
