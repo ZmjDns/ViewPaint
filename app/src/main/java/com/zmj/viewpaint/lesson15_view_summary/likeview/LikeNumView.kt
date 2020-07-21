@@ -55,7 +55,7 @@ class LikeNumView : View {
         val rect = Rect()
         val textBounds = paint.getTextBounds(curNum,0,curNum.length,rect)
         var width = (rect.width() + rightPadding).toInt()
-        val height = rect.height() * 3
+        val height = rect.height() * 4
         val widthSpecSize = MeasureSpec.getSize(widthMeasureSpec)
         width = resolveSize(width,widthSpecSize)
         setMeasuredDimension(width,height)
@@ -79,8 +79,8 @@ class LikeNumView : View {
         super.onDraw(canvas!!)
         centerY = height / 2
         val leftX = 0
-        val rect = Rect()
-        paint.getTextBounds("0",0,0,rect)
+        var rect = Rect()
+        paint.getTextBounds("0",0,1,rect)
 
         drawAnimNum(canvas,leftX, centerY - (rect.top + rect.bottom)/2,mCurNum,newNum)
     }
