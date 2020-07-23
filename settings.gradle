@@ -1,3 +1,6 @@
 include ':javalib'
 rootProject.name='ViewPaint'
 include ':app'
+//gradle 执行的第一阶段，第二第三阶段分别是/build.gradle、/app/build.gradle  第三阶段执行task
+
+
