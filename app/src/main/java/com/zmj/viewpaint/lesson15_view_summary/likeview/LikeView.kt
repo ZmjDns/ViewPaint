@@ -5,8 +5,10 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import androidx.annotation.ColorInt
 import androidx.core.animation.addListener
 import com.zmj.viewpaint.R
 
@@ -58,6 +60,7 @@ class LikeView : LinearLayout {
         val custom = context?.obtainStyledAttributes(attrs,R.styleable.LikeView) ?: return
 
         val likeNum = custom.getInt(R.styleable.LikeView_likeNum,0)
+        val numColor = custom.getColor(R.styleable.LikeView_numColor,Color.parseColor("#c3c4c3"))
         val liked = custom.getBoolean(R.styleable.LikeView_liked,false)
         val leftPadding = custom.getDimension(R.styleable.LikeView_leftPadding,0f)
         val rightPadding = custom.getDimension(R.styleable.LikeView_rightPadding,0f)
@@ -72,10 +75,9 @@ class LikeView : LinearLayout {
         likeNumView.setRightPadding(rightPadding)
         likeImageView.setLeftPadding(leftPadding)
         likeImageView.setMiddlePadding(middlePadding)
+        likeNumView.setNumColor(numColor)
         likeNumView.setNum(likeNum)
-
         setLike(liked)
-
         custom.recycle()
     }
 
@@ -111,8 +113,6 @@ class LikeView : LinearLayout {
         animatorSet.playTogether(numAnimator,imageAnimator)
 
         setMeasuredDimension(likeImageView.measuredWidth + likeNumView.measuredWidth,measuredHeight)
-
-
     }
 
     override fun onDetachedFromWindow() {

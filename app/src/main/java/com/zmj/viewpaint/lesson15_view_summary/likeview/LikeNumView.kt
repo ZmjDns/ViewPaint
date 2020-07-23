@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.ColorInt
 import com.zmj.viewpaint.common.dp2px
 import kotlin.math.max
 
@@ -36,9 +37,17 @@ class LikeNumView : View {
 
     private var translationY: Int = 0
 
+    private val measureNumRect = Rect()
+
+    private val onMeasureTextRect = Rect()
+
     init {
         paint.textSize = textSize
         paint.color = Color.parseColor("#c3c4c3")
+    }
+
+    fun setNumColor(@ColorInt color: Int){
+        paint.color = color
     }
 
     fun setNum(num: Int){
@@ -52,10 +61,10 @@ class LikeNumView : View {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         //保证足够长
         val curNum = ((mCurNum + 1) * 10).toString()
-        val rect = Rect()
-        val textBounds = paint.getTextBounds(curNum,0,curNum.length,rect)
-        var width = (rect.width() + rightPadding).toInt()
-        val height = rect.height() * 4
+//        val rect = Rect()
+        paint.getTextBounds(curNum,0,curNum.length,onMeasureTextRect)
+        var width = (onMeasureTextRect.width() + rightPadding).toInt()
+        val height = onMeasureTextRect.height() * 4
         val widthSpecSize = MeasureSpec.getSize(widthMeasureSpec)
         width = resolveSize(width,widthSpecSize)
         setMeasuredDimension(width,height)
@@ -78,11 +87,10 @@ class LikeNumView : View {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas!!)
         centerY = height / 2
-        val leftX = 0
-        var rect = Rect()
-        paint.getTextBounds("0",0,1,rect)
-
-        drawAnimNum(canvas,leftX, centerY - (rect.top + rect.bottom)/2,mCurNum,newNum)
+//        val rect = Rect()
+        paint.getTextBounds("0",0,1,measureNumRect)
+        val leftX = measureNumRect.left
+        drawAnimNum(canvas,leftX, centerY - (measureNumRect.top + measureNumRect.bottom)/2,mCurNum,newNum)
     }
 
     private fun drawAnimNum(canvas: Canvas, leftX: Int, baseTxtY: Int, mCurNum: Int, newNum: Int) {
@@ -120,7 +128,7 @@ class LikeNumView : View {
         val newBaseY: Int
         val transY: Int
         if (upOrDown){  //up
-            transY = - translationY
+            transY = -translationY
             newBaseY = baseTxtY + mMoveY
         }else{  //down
             transY = translationY
