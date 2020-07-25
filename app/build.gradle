@@ -2,6 +2,31 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+
+//////////gradle自定义plugin最简单写法//////////////
+/*class PluginDemo implements Plugin<Project>{//org.gradle.api.Plugin
+    @Override
+    void apply(Project target) {
+        //def author = 'zmj'
+        //println "Hello ${author}"
+        *//*def extension = new ExtensionDemo()
+        println "Hello ${extension.name}"*//*
+        def extension = target.extensions.create('zmj',ExtensionDemo)
+        target.afterEvaluate {  //稍后执行，即在赋值完成以后执行
+            println "Hello ${extension.name}"
+        }
+    }
+}
+class ExtensionDemo{
+    def name = 'Author'
+}
+apply plugin: PluginDemo //'hencoder_plugin'
+zmj{    //给对应成员赋值
+    name 'MengjainZhang'
+}*/
+////////////////////////////////////
+
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -32,7 +57,7 @@ android {
     }
 
     //渠道包
-    flavorDimensions 'price','nation'
+    /*flavorDimensions 'price','nation'
     productFlavors{
         free{
             dimension 'price'
@@ -46,7 +71,7 @@ android {
         global{
             dimension 'nation'
         }
-    }
+    }*/
 
 }
 
