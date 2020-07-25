@@ -41,6 +41,14 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    //---------项目中的plugin----------
+    apply plugin: 'com.zmj.plugin'
+
+    ZMJ1{
+        name 'Zmj HAHAHA'
+    }
+//-----------------------------------------
+
     buildTypes {
         //与不同性值的功能结合打包
 //        internal{
