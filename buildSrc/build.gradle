@@ -1,0 +1,19 @@
+//apply plugin: 'java-library'
+//该项目是最早运行的，甚至比项目的build.gradle运行的都早，
+// 所以不用在setting.gradle中加入该buildSrc项目
+
+
+//利用gradle插件编写plugin
+repositories {
+    google()
+    jcenter()
+}
+dependencies {
+    implementation 'com.android.tools.build:gradle:3.6.1'
+}
+
+
+/*sourceCompatibility = "1.7"
+targetCompatibility = "1.7"*/
+
+println 'I am buildScr build gradle'
