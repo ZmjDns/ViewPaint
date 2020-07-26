@@ -1,3 +1,4 @@
+//include ':buildSrc' 无需声明，因为buildSrc会最先被加载编译
 include ':javalib'
 rootProject.name='ViewPaint'
 include ':app'
