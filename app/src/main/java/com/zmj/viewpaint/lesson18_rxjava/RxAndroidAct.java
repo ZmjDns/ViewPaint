@@ -13,6 +13,7 @@ import com.zmj.viewpaint.lesson18_rxjava.net.Api;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
@@ -136,7 +137,6 @@ public class RxAndroidAct extends AppCompatActivity {
 
                     }
                 });
-
 
 
     }
