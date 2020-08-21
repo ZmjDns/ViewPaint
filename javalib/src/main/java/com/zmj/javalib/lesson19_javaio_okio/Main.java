@@ -2,6 +2,7 @@ package com.zmj.javalib.lesson19_javaio_okio;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,6 +30,8 @@ import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
 import okio.Buffer;
 import okio.Okio;
 import okio.Sink;
@@ -192,11 +195,21 @@ class Main {
             e.printStackTrace();
         }
 
+
+        //写入数据用Sink
         try(Sink sink = Okio.sink(new File("./19_io.txt"))){
             Buffer buffer = new Buffer();
 
             buffer.writeUtf8("写入数据:\n");
             buffer.writeUtf8("hello OkIo");
+            sink.write(buffer,buffer.size());
+
+            //也可以写入ByteArray或InputStream数据
+            byte[] byteArrayInputStream = "njiwndiewdineifvb".getBytes();
+            buffer.write(byteArrayInputStream);
+
+            InputStream inputStream = new FileInputStream(new File("./19_io.txt"));
+            buffer.readFrom(inputStream);
             sink.write(buffer,buffer.size());
 
         }catch (Exception e){
