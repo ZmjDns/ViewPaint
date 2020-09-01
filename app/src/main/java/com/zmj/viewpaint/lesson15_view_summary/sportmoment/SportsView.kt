@@ -125,7 +125,7 @@ class SportsView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             val loadingTop = loadingCircle.top
             val loadingRight = loadingCircle.right
             val loadingBottom = loadingCircle.bottom
-            for (i in 0 until 20){
+            for (i in 0..19){
                 val value = mRandom.nextInt(25)
                 val seed = mRandom.nextInt(3)
                 loadingCircle.left = loadingLeft + value + seed
@@ -141,7 +141,7 @@ class SportsView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             val decorPointY = centerY + 5
             var tempX = 0f
             var tempY = 0f
-            for (i in 0 until 10){
+            for (i in 0..9){
                 val value0 = mRandom.nextInt(i + 20)
                 val  value = i * 2 + mRandom.nextInt(i + 20)
                 tempX = decorPointX - value0
