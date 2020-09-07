@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.zmj.viewpaint.R
+import kotlinx.android.synthetic.main.act_sport_view.view.*
 
 /**
  * Author : Zmj
@@ -24,7 +25,9 @@ class SportFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.act_like,container,false)
+        val view = inflater.inflate(R.layout.act_sport_view,container,false)
+        view.viewMove.startAnimal()
+        view.viewSport.startAnimal()
         return view
     }
 }
