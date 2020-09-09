@@ -6,7 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:background="@color/colorAccent"
+    tools:context=".MainActivity"
+    android:fitsSystemWindows="true">
+
+
 
     <TextView
         android:id="@+id/lesson6"
@@ -58,9 +62,42 @@
         android:gravity="center"
         android:layout_margin="10dp"
         android:text="@string/lesson12"/>
+    <TextView
+        android:id="@+id/lesson13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:text="@string/lesson13"/>
+    <TextView
+        android:id="@+id/lesson14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:text="@string/lesson14"/>
 
+    <TextView
+        android:id="@+id/lesson15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:text="@string/lesson15"/>
 
+    <TextView
+        android:id="@+id/lesson15like"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:text="@string/lesson15like"/>
 
-
-
+    <TextView
+        android:id="@+id/lesson18RxJava"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:text="@string/lesson18rxJava"/>
 </LinearLayout>
