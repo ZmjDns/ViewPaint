@@ -41,9 +41,9 @@ class TwoPager(context: Context?, attrs: AttributeSet?) : ViewGroup(context, att
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         var childLeft = 0
-        var childTop = 0
+        val childTop = 0
         var childRight = width
-        var childBottom = height
+        val childBottom = height
         for (i in 0 until childCount){
             val view = getChildAt(i)
             view.layout(childLeft,childTop,childRight,childBottom)
