@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zmj.viewpaint">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -37,6 +40,12 @@
         <activity android:name=".lesson12.Lesson12Act">
 
         </activity>
+        <activity android:name=".lesson13_multi_touch.MultiTouchAct" />
+        <activity android:name=".lesson14_viewpager.Lesson14Act" />
+        <activity android:name=".lesson15_drag_nestedScroll.dragview.Lesson15DragAct" />
+        <activity android:name=".lesson15_view_summary.likeview.LikeAct" />
+        <activity android:name=".lesson18_rxjava.RxAndroidAct" />
+        <activity android:name=".lesson15_view_summary.SummaryAct" />
     </application>
 
 </manifest>
