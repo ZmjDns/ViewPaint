@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.zmj.viewpaint.lesson15_view_summary.likeview.LikeView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#2B2B2B"
+        app:leftPadding="10dp"
+        app:likeNum="9"
+        app:likedSrc="@drawable/ic_messages_like_selected"
+        app:middlePadding="5dp"
+        app:rightPadding="5dp"
+        app:shiningSrc="@drawable/ic_messages_like_selected_shining"
+        app:unLikedSrc="@drawable/ic_messages_like_unselected" />
+
+    <com.zmj.viewpaint.lesson15_view_summary.likeview.LikeView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimaryDark"
+        app:leftPadding="5dp"
+        app:rightPadding="5dp"
+        app:middlePadding="5dp"
+        app:likeNum="119"
+        app:likedSrc="@drawable/ic_messages_like_selected"
+        app:shiningSrc="@drawable/ic_messages_like_selected_shining"
+        app:unLikedSrc="@drawable/ic_messages_like_unselected"/>
+
+
+
+    <com.zmj.viewpaint.lesson15_view_summary.likeview.LikeView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorAccent"
+        app:leftPadding="10dp"
+        app:middlePadding="5dp"
+        app:rightPadding="5dp"
+        app:likeNum="999"
+        app:numColor="@color/colorPrimary"
+        app:likedSrc="@drawable/ic_messages_like_selected"
+        app:shiningSrc="@drawable/ic_messages_like_selected_shining"
+        app:unLikedSrc="@drawable/ic_messages_like_unselected"/>
+</LinearLayout>
