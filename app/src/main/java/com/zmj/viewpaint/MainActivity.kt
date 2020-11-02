@@ -4,19 +4,27 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.os.TestLooperManager
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.zmj.viewpaint.lesson10.LayoutLesson10Act
 import com.zmj.viewpaint.lesson11.Lesson11Act
 import com.zmj.viewpaint.lesson12.Lesson12Act
 import com.zmj.viewpaint.lesson13_multi_touch.MultiTouchAct
 import com.zmj.viewpaint.lesson14_viewpager.Lesson14Act
+import com.zmj.viewpaint.lesson15_drag_nestedScroll.dragview.Lesson15DragAct
+import com.zmj.viewpaint.lesson15_view_summary.SummaryAct
+import com.zmj.viewpaint.lesson15_view_summary.likeview.LikeAct
+import com.zmj.viewpaint.lesson18_rxjava.RxAndroidAct
 import com.zmj.viewpaint.lesson6.SixAct
 import com.zmj.viewpaint.lesson7.ActSeven
 import com.zmj.viewpaint.lesson8.AnimatorAct
 import com.zmj.viewpaint.lesson9.BitmapDrawableAct
 import kotlinx.android.synthetic.main.activity_main.*
+
+import com.zmj.viewpaint.utils.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +43,14 @@ class MainActivity : AppCompatActivity() {
 
         initView()
     }
+
+    /*private fun drawBadge() {
+        val decorView = window.decorView as ViewGroup
+        val badge = View(this)
+        badge.setBackgroundColor(Color.RED)
+        decorView.addView(badge,200,200)
+    }*/
+
 
     private fun initView(){
         lesson6.setOnClickListener {
@@ -63,6 +79,15 @@ class MainActivity : AppCompatActivity() {
         }
         lesson14.setOnClickListener {
             startActivity(Intent(this,Lesson14Act::class.java))
+        }
+        lesson15.setOnClickListener {
+            startActivity(Intent(this,Lesson15DragAct::class.java))
+        }
+        lesson15like.setOnClickListener {
+            startActivity(Intent(this,SummaryAct::class.java))
+        }
+        lesson18RxJava.setOnClickListener {
+            startActivity(Intent(this,RxAndroidAct::class.java))
         }
     }
 }
