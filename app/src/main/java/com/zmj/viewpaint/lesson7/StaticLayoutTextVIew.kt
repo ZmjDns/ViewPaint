@@ -55,7 +55,7 @@ class StaticLayoutTextVIew(context: Context?, attrs: AttributeSet?) : View(conte
 
         var index = paint.breakText(text,true,width.toFloat(),cutWidth)
         canvas?.drawText(text,0,index,0f,50f,paint)
-        var oldIndex = index
+        val oldIndex = index
         index = paint.breakText(text,index,text.length,true,width.toFloat() - bitmap.width,cutWidth)
         canvas?.drawText(text,oldIndex,oldIndex + index,0f,50 + paint.fontSpacing,paint)
 
