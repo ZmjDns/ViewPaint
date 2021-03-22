@@ -9,6 +9,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:gravity="center">
+            <com.zmj.viewpaint.lesson6.TestView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:gravity="center">
+            <com.zmj.viewpaint.lesson6.TestPie
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:gravity="center">
+            <com.zmj.viewpaint.lesson6.TestAvatar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
